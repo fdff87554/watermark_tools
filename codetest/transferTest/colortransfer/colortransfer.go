@@ -39,7 +39,7 @@ func YCbCrToRGB(y, cb, cr uint8) (uint8, uint8, uint8) {
 }
 
 // RGBToYCbCr converts an RGB triple to a Y'CbCr triple.
-func goDocRGBToYCbCr(r, g, b uint8) (uint8, uint8, uint8) {
+func GoDocRGBToYCbCr(r, g, b uint8) (uint8, uint8, uint8) {
 	// The JFIF specification says:
 	//	Y' =  0.2990*R + 0.5870*G + 0.1140*B
 	//	Cb = -0.1687*R - 0.3313*G + 0.5000*B + 128
@@ -89,7 +89,7 @@ func goDocRGBToYCbCr(r, g, b uint8) (uint8, uint8, uint8) {
 }
 
 // YCbCrToRGB converts a Y'CbCr triple to an RGB triple.
-func goDocYCbCrToRGB(y, cb, cr uint8) (uint8, uint8, uint8) {
+func GoDocYCbCrToRGB(y, cb, cr uint8) (uint8, uint8, uint8) {
 	// The JFIF specification says:
 	//	R = Y' + 1.40200*(Cr-128)
 	//	G = Y' - 0.34414*(Cb-128) - 0.71414*(Cr-128)
