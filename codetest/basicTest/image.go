@@ -3,35 +3,70 @@
 package main
 
 import (
-	"image/jpeg"
+	"fmt"
+	"image/color"
 	"image/png"
-	"io"
 	"log"
 	"os"
 )
 
-// convertJPEGToPNG converts from JPEG to PNG.
-func convertJPEGToPNG(w io.Writer, r io.Reader) error {
-	img, err := jpeg.Decode(r)
-	if err != nil {
-		return err
-	}
-	return png.Encode(w, img)
-}
+//// convertJPEGToPNG converts from JPEG to PNG.
+//func convertJPEGToPNG(w io.Writer, r io.Reader) error {
+//	img, err := jpeg.Decode(r)
+//	if err != nil {
+//		return err
+//	}
+//	return png.Encode(w, img)
+//}
 
 func main() {
-	// testing basic image input and output in golang
-	reader, err := os.Open("../testImage/cat_in_jpg.jpg")
+	pngReader, err := os.Open("../testImage/cat_in_png.png")
 	if err != nil {
 		log.Fatal(err)
 	}
-	defer reader.Close()
+	defer pngReader.Close()
 
-	writer, err := os.Create("../testImage/cat_transfer_from_jpg.png")
+	jpegReader, err := os.Open("../testImage/cat_in_jpg.jpg")
 	if err != nil {
 		log.Fatal(err)
 	}
-	defer writer.Close()
+	defer jpegReader.Close()
 
-	convertJPEGToPNG(writer, reader)
+	//should not use auto decode (image.Decode), usually get mistake
+	pngImg, err := png.Decode(pngReader)
+	if err != nil {
+		log.Fatal(err)
+	}
+	switch pngImg.ColorModel() {
+	case color.AlphaModel:
+		fmt.Println("AlphaModel")
+	case color.Alpha16Model:
+		fmt.Println("Alpha16Model")
+	case color.YCbCrModel:
+		fmt.Println("YCbCrModel")
+	case color.NYCbCrAModel:
+		fmt.Println("NYCbCrAModel")
+	case color.GrayModel:
+		fmt.Println("GrayModel")
+	case color.Gray16Model:
+		fmt.Println("Gray16Model")
+	case color.RGBAModel:
+		fmt.Println("RGBAModel")
+	case color.NRGBAModel:
+		fmt.Println("NRGBAModel")
+	case color.NRGBA64Model:
+		fmt.Println("NRGBA64Model")
+	case color.RGBA64Model:
+		fmt.Println("RGBA64Model")
+	case color.CMYKModel:
+		fmt.Println("CMYKModel")
+	default:
+		fmt.Println("none is above")
+	}
+
+	//jpegImg, err := jpeg.Decode(jpegReader)
+	//if err != nil {
+	//	log.Fatal(err)
+	//}
+	//fmt.Println(jpegImg.ColorModel(), "jpeg")
 }
