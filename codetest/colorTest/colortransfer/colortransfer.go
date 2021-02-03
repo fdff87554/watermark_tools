@@ -7,6 +7,7 @@ import (
 
 //ColorToGray convert image color to Grayscale
 func ColorToGray(img image.Image) image.Image {
+
 	grayImg := image.NewGray(img.Bounds())
 	for y := img.Bounds().Min.Y; y < img.Bounds().Max.Y; y++ {
 		for x := img.Bounds().Min.X; x < img.Bounds().Max.X; x++ {
@@ -19,6 +20,7 @@ func ColorToGray(img image.Image) image.Image {
 
 //ColorToAlpha convert image color to Alpha
 func ColorToAlpha(img image.Image) image.Image {
+
 	alphaImg := image.NewAlpha(img.Bounds())
 	for y := img.Bounds().Min.Y; y < img.Bounds().Max.Y; y++ {
 		for x := img.Bounds().Min.X; x < img.Bounds().Max.X; x++ {
@@ -31,6 +33,7 @@ func ColorToAlpha(img image.Image) image.Image {
 
 //ColorToCMYK convert image color to CMYK
 func ColorToCMYK(img image.Image) image.Image {
+
 	CMYKImg := image.NewCMYK(img.Bounds())
 	for y := img.Bounds().Min.Y; y < img.Bounds().Max.Y; y++ {
 		for x := img.Bounds().Min.X; x < img.Bounds().Max.X; x++ {
@@ -43,6 +46,7 @@ func ColorToCMYK(img image.Image) image.Image {
 
 //ColorToNRGBA convert image color to NRGBA
 func ColorToNRGBA(img image.Image) image.Image {
+
 	NRGBAImg := image.NewNRGBA(img.Bounds())
 	for y := img.Bounds().Min.Y; y < img.Bounds().Max.Y; y++ {
 		for x := img.Bounds().Min.X; x < img.Bounds().Max.X; x++ {
@@ -66,6 +70,7 @@ func ColorToNRGBA(img image.Image) image.Image {
 //}
 
 func ColorToYCbCr(img image.Image, ycbcrRatio int) image.Image {
+
 	ycbcrImg := image.NewYCbCr(img.Bounds(), image.YCbCrSubsampleRatio(ycbcrRatio))
 	for y := img.Bounds().Min.Y; y < img.Bounds().Max.Y; y++ {
 		for x := img.Bounds().Min.X; x < img.Bounds().Max.X; x++ {

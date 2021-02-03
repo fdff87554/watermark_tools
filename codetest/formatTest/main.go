@@ -2,16 +2,13 @@ package main
 
 import (
 	"formatTest/formattransfer"
-	"image/png"
+	"image/jpeg"
 	"log"
 	"os"
-
-	"github.com/go-echarts/go-echarts/v2/charts"
-	"github.com/go-echarts/go-echarts/v2/opts"
 )
 
 func main() {
-	imgReader, err := os.Open("../testImage/cat_in_png.png")
+	imgReader, err := os.Open("../testImage/cat_in_jpg.jpg")
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -20,7 +17,7 @@ func main() {
 			log.Fatal(err)
 		}
 	}()
-	imgWriter, err := os.Create("../testImage/output/DFT_test.png")
+	imgWriter, err := os.Create("../testImage/output/cat_in_jpg.jpg")
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -29,25 +26,20 @@ func main() {
 			log.Fatal(err)
 		}
 	}()
-	txtWriter, err := os.Create("../testImage/output/FFT_test.txt")
+
+	img, err := jpeg.Decode(imgReader)
 	if err != nil {
 		log.Fatal(err)
 	}
-	defer func() {
-		if err := txtWriter.Close(); err != nil {
-			log.Fatal(err)
-		}
-	}()
-
-	img, err := png.Decode(imgReader)
+	imgFreq, err := formattransfer.FDCT(img)
 	if err != nil {
 		log.Fatal(err)
 	}
-	imgFFFT := formattransfer.FFFT(img)
-
-	imgIFFT := formattransfer.IFFT(imgFFFT, img.Bounds())
-
-	if err := png.Encode(imgWriter, imgIFFT); err != nil {
+	imgBack, err := formattransfer.IDCT(imgFreq, img.Bounds().Dx(), img.Bounds().Dy())
+	if err != nil {
+		log.Fatal(err)
+	}
+	if err = jpeg.Encode(imgWriter, imgBack, &jpeg.Options{Quality: 100}); err != nil {
 		log.Fatal(err)
 	}
 }

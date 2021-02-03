@@ -71,29 +71,23 @@ func imageTranfer(img image.Image, colorType int) error {
 }
 
 func main() {
-	pngReader, err := os.Open("../testImage/cat_in_png.png")
+	imgReader, err := os.Open("../testImage/icon.png")
 	if err != nil {
 		log.Fatal(err)
 	}
-	defer pngReader.Close()
-	pngImg, err := png.Decode(pngReader)
+	defer imgReader.Close()
+	imgWriter, err := os.Create("../testImage/output/icon.png")
 	if err != nil {
 		log.Fatal(err)
 	}
+	defer imgWriter.Close()
 
-	if err := imageTranfer(pngImg, 0); err != nil {
+	img, _, err := image.Decode(imgReader)
+	if err != nil {
 		log.Fatal(err)
 	}
-	if err := imageTranfer(pngImg, 1); err != nil {
-		log.Fatal(err)
-	}
-	if err := imageTranfer(pngImg, 2); err != nil {
-		log.Fatal(err)
-	}
-	if err := imageTranfer(pngImg, 3); err != nil {
-		log.Fatal(err)
-	}
-	if err := imageTranfer(pngImg, 4); err != nil {
+	imgTranfer := colortransfer.ColorToYCbCr(img, 0)
+	if err := png.Encode(imgWriter, imgTranfer); err != nil {
 		log.Fatal(err)
 	}
 }
