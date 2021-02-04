@@ -8,7 +8,7 @@ import (
 )
 
 func main() {
-	imgReader, err := os.Open("../testImage/cat_in_jpg.jpg")
+	imgReader, err := os.Open("../testImage/cat_in_jpg.jpeg")
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -17,7 +17,7 @@ func main() {
 			log.Fatal(err)
 		}
 	}()
-	imgWriter, err := os.Create("../testImage/output/cat_in_jpg.jpg")
+	imgWriter, err := os.Create("../testImage/output/cat_in_jpg.jpeg")
 	if err != nil {
 		log.Fatal(err)
 	}
