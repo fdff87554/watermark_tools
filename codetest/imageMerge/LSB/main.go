@@ -13,9 +13,9 @@ func merge(img color.Color, code color.Color) color.Color {
 	r, g, b, _ := img.RGBA()
 	cr, cg, cb, _ := code.RGBA()
 	return color.RGBA{
-		R: uint8(r)&254+uint8(cr)&1,
-		G: uint8(g)&254+uint8(cg)&1,
-		B: uint8(b)&254+uint8(cb)&1,
+		R: uint8(r)&248 + uint8(cr)&7,
+		G: uint8(g)&248 + uint8(cg)&7,
+		B: uint8(b)&248 + uint8(cb)&7,
 		A: 255,
 	}
 }
@@ -43,9 +43,9 @@ func imageSep(img image.Image) image.Image {
 		for x := 0; x < img.Bounds().Dx(); x++ {
 			r, g, b, _ := img.At(x, y).RGBA()
 			outImg.Set(x, y, color.RGBA{
-				R: uint8(r)&1<<7,
-				G: uint8(g)&1<<7,
-				B: uint8(b)&1<<7,
+				R: uint8(r) & 3 << 6,
+				G: uint8(g) & 3 << 6,
+				B: uint8(b) & 3 << 6,
 				A: 255,
 			})
 		}
