@@ -5,7 +5,7 @@ package main
 import (
 	"fmt"
 	"image/color"
-	"image/png"
+	"image/jpeg"
 	"log"
 	"os"
 )
@@ -32,7 +32,7 @@ import (
 //}
 
 func main() {
-	grayReader, err := os.Open("../testImage/NISRA.png")
+	grayReader, err := os.Open("../testImage/gray.jpeg")
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -86,7 +86,7 @@ func main() {
 	//	fmt.Println("none is above")
 	//}
 
-	grayImg, err := png.Decode(grayReader)
+	grayImg, err := jpeg.Decode(grayReader)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -124,7 +124,6 @@ func main() {
 	//} else {
 	//	fmt.Println(err)
 	//}
-
 
 	for y := 0; y < grayImg.Bounds().Dy(); y++ {
 		for x := 0; x < grayImg.Bounds().Dx(); x++ {

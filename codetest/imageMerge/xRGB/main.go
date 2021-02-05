@@ -3,7 +3,6 @@ package main
 import (
 	"image"
 	"image/color"
-	"image/jpeg"
 	"image/png"
 	"log"
 	"os"
@@ -96,7 +95,7 @@ func imageSep(img image.Image) image.Image {
 
 func main() {
 
-	imgReader, err := os.Open("../../testImage/cat_1200x600.png")
+	imgReader, err := os.Open("./input/cat_1200x600.png")
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -105,7 +104,7 @@ func main() {
 			log.Fatal(err)
 		}
 	}()
-	codeReader, err := os.Open("../../testImage/NISRA.png")
+	codeReader, err := os.Open("./input/qrcode.png")
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -114,7 +113,7 @@ func main() {
 			log.Fatal(err)
 		}
 	}()
-	imgWriter, err := os.Create("../../testImage/output/merge.png")
+	imgWriter, err := os.Create("./output/merge.png")
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -123,7 +122,7 @@ func main() {
 			log.Fatal(err)
 		}
 	}()
-	codeWriter, err := os.Create("../../testImage/output/unmerge.jpeg")
+	codeWriter, err := os.Create("./output/unmerge.png")
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -147,7 +146,7 @@ func main() {
 		log.Fatal(err)
 	}
 
-	margeReader, err := os.Open("../../testImage/output/merge.png")
+	margeReader, err := os.Open("./output/merge.png")
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -162,7 +161,7 @@ func main() {
 	}
 
 	outCode := imageSep(margeImg)
-	if err := jpeg.Encode(codeWriter, outCode, &jpeg.Options{Quality: 100}); err != nil {
+	if err := png.Encode(codeWriter, outCode); err != nil {
 		log.Fatal(err)
 	}
 }
