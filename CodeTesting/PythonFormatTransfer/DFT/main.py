@@ -1,6 +1,6 @@
+from PIL import Image
 import numpy as np
-import cv2
-import matplatlib.pyplot as plt
+import matplotlib.pyplot as plt
 
 # def HPF_processing(img, cover):
 #     """
@@ -59,7 +59,9 @@ import matplatlib.pyplot as plt
 # Press the green button in the gutter to run the script.
 if __name__ == '__main__':
 
-    img = cv2.imread('./turing.jpeg', 0)
+    with Image.open('./turing.jpeg') as img:
+        img = img.convert('L')
+
     freq = np.fft.fft2(img)
     freq_shift = np.fft.fftshift(freq)
     magnitude_spectrum = 20 * np.log(np.abs(freq_shift))
